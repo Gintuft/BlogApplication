@@ -1,0 +1,14 @@
+$component: 'island';
+
+.#{$component} {
+  margin-top: 1.5rem;
+  background-color: rgb(240, 242, 250);
+
+  &__item {
+    padding: 0.5rem 1rem;
+
+    & + & {
+      border-top: 2px solid rgb(175, 200, 247);
+    }
+  }
+}
