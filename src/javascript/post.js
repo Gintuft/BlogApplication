@@ -29,7 +29,7 @@ class Post {
   getTemplatePost ({ title, lead, content, author, createdAt, id }) {
     return `
     <h2>${title}</h2>
-    <p class = "lead">${lead}</p>
+    <p class = "lead"><i>${lead}</i></p>
     <p class = "mb-4">${content}</p>
     <div class = "text-muted">
       ${author}<br>
