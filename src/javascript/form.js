@@ -29,7 +29,7 @@ class Form {
     this.formElement.reset()
   }
 
-  sendPost (data) {
+  async sendPost (data) {
     const dataJson = JSON.stringify(data)
     const opts = {
       method: 'POST',
@@ -39,12 +39,11 @@ class Form {
       body: dataJson
     }
 
-    fetch('/api/posts', opts)
-      .then((response) => response.json())
-      .then((data) => {
-        const event = new Event('posts:needsRender')
-        window.dispatchEvent(event)
-      })
+    const response = await fetch('/api/posts', opts)
+    const dataPosts = await response.json()
+    console.log(dataPosts)
+    const event = new Event('posts:needsRender')
+    window.dispatchEvent(event)
   }
 }
 

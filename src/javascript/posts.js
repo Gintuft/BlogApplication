@@ -1,26 +1,47 @@
+
 class Posts {
   constructor (containerElement) {
     this.containerElement = containerElement
-
+    this.currentPost = null
     this.init()
   }
 
   init () {
     this.render()
-
     this.handlePostsNeedsRender = this.handlePostsNeedsRender.bind(this)
-
+    this.handleClickPost = this.handleClickPost.bind(this)
     window.addEventListener('posts:needsRender', this.handlePostsNeedsRender)
+    this.containerElement.addEventListener('click', this.handleClickPost)
   }
 
   handlePostsNeedsRender () {
     this.render()
   }
 
-  getTemplatePost ({ title, createdAt }) {
+  handleClickPost (event) {
+    event.preventDefault()
+    const { target } = event
+    if (target.tagName === 'A') {
+      this.activatePost(target)
+      const event = new CustomEvent('post:click', {
+        detail: { id: target.id }
+      })
+      window.dispatchEvent(event)
+    }
+  }
+
+  activatePost (element) {
+    if (this.currentPost) {
+      this.currentPost.classList.remove('active')
+    }
+    element.classList.add('active')
+    this.currentPost = element
+  }
+
+  getTemplatePost ({ title, createdAt, id }) {
     return `
       <div class="island__item">
-        <h6>${title}</h6>
+        <h6><a href = "#${id}" id="${id}" class = "stretched-link" style = "text-decoration:none"><i>${title}</i></a></h6>
         <div class="text-muted"><time>${createdAt}</time></div>
       </div>
     `
@@ -34,22 +55,16 @@ class Posts {
     return result.join(' ')
   }
 
-  getPosts () {
-    return new Promise((resolve, reject) => {
-      fetch('/api/posts')
-        .then((response) => response.json())
-        .then((data) => resolve(data.list))
-        .catch((error) => reject(error))
-    })
+  async getPosts () {
+    const response = await fetch('/api/posts')
+    const data = await response.json()
+    return data.list
   }
 
-  render () {
-    this.getPosts()
-      .then(posts => {
-        const postsHTML = this.createPosts(posts)
-
-        this.containerElement.innerHTML = postsHTML
-      })
+  async render () {
+    const posts = await this.getPosts()
+    const postsHTML = this.createPosts(posts)
+    this.containerElement.innerHTML = postsHTML
   }
 }
 
