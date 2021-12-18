@@ -1,40 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BlogApplication</title>
-  <!-- app.bundle.js подключается именно так, работает благодаря настройкам сервера -->
   <script src="/app.bundle.js" defer></script>
 </head>
+
 <body>
   <div class="container w-75">
     <div class="island">
-      <div class="island__item">
-        <h2>Создание поста</h2>
+      <div class="island__item d-flex aligh-items-center">
+        <h2 class="mb-0">Создание поста</h2>
+        <button type="button" class="btn btn-primary ms-auto" id="buttonCreatePost">
+          Создать
+        </button>
       </div>
-      <div class="island__item">
-        <form id="form">
-          <div class="mb-3">
-            <label for="title" class="form-label">Название*</label>
-            <input type="text" class="form-control" id="title" name="title">
-          </div>
-          <div class="mb-3">
-            <label for="author" class="form-label">Автор</label>
-            <input type="text" class="form-control" id="author" name="author">
-          </div>
-          <div class="mb-3">
-            <label for="lead" class="form-label">Лид</label>
-            <textarea class="form-control" id="lead" rows="3" name="lead"></textarea>
-          </div>
-          <div class="mb-3">
-            <label for="content" class="form-label">Содержание поста*</label>
-            <textarea class="form-control" id="content" rows="6" name="content"></textarea>
-          </div>
-          <button type="submit" class="btn btn-primary">Создать</button>
-        </form>
-      </div>
+
     </div>
 
     <div class="row">
@@ -54,9 +38,44 @@
     </div>
   </div>
 
+  <div class="modal fade" id="formModal" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Пост</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="form" method="POST">
+            <input type="hidden" name="id" id="id">
+            <input type="hidden" name="cratedAt" id="cratedAt">
+            <div class="mb-3">
+              <label for="title" class="form-label">Название*</label>
+              <input type="text" class="form-control" id="title" name="title">
+            </div>
+            <div class="mb-3">
+              <label for="author" class="form-label">Автор</label>
+              <input type="text" class="form-control" id="author" name="author">
+            </div>
+            <div class="mb-3">
+              <label for="lead" class="form-label">Лид</label>
+              <textarea class="form-control" id="lead" rows="3" name="lead"></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="content" class="form-label">Содержание поста*</label>
+              <textarea class="form-control" id="content" rows="6" name="content"></textarea>
+            </div>
+
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+          <button type="submit" class="btn btn-primary" form="form">Создать</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </body>
+
 </html>
-
-
-
-

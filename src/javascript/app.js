@@ -1,6 +1,5 @@
 import '../scss/app.scss'
-
-// import { Modal } from 'bootstrap'
+import bootstrap from 'bootstrap'
 
 import { Form } from './form'
 import { Posts } from './posts'
